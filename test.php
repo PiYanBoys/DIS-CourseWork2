@@ -22,7 +22,7 @@
         <h1>Login</h1>
         <form method="POST" class="yellow">
             Username: &nbsp;<input type="text" name="username"><br>
-            Password: <input type="text" name="password"><br>
+            Password: <input type="password" name="password"><br>
             <input type="submit" value="Log in">
         </form>
 
@@ -68,18 +68,18 @@
 
 
             ?>
-<!--        <script>-->
-<!--            var button = document.querySelector(".change11")-->
-<!--            var form = document.querySelector(".changePassword")-->
-<!--            button.addEventListener("click", function (e) {-->
-<!--                e.preventDefault();-->
-<!--                window.location.href='changepassword.php'-->
-<!--                console.log(e);-->
-<!--                console.log(e);-->
-<!--                form.classList.remove("changePassword");-->
-<!--                form.classList.add("show")-->
-<!--                form.classList.add("yellow")-->
-<!--            })-->
-<!--        </script>-->
+        <script>
+            var button = document.querySelector(".change11")
+            var form = document.querySelector(".changePassword")
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.location.href='changepassword.php'
+                console.log(e);
+                console.log(e);
+                form.classList.remove("changePassword");
+                form.classList.add("show")
+                form.classList.add("yellow")
+            })
+        </script>
     </body>
 </html>

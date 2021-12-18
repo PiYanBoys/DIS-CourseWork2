@@ -6,32 +6,36 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        form#vehicle{
+            display: block;
+        }
+        form#person{
+            display: none;
+        }
+    </style>
 </head>
 <body>
+
+
 <h1>Add a New Vehicle</h1>
-<form method = "POST" class = "yellow">
+<form method = "POST" id = "vehicle">
     <h1>Vehicle Details</h1>
     Licence: &nbsp;<input type="text" name="plate"><br>
     Make: <input type="text" name="make"><br>
     Model: <input type="text" name="model"><br>
     Colour:  <input type="text" name="colour"><br>
     <h2>Owner's Details</h2>
-    Name:  <input type="text" name="name"><br>
     Licence:  <input type="text" name="licence"><br>
     <input type="submit" value="Add">
 </form>
-
+    <div id="myDiv"></div>
 <script>
-    function confirmAdd()
+    function newperson()
     {
-        var conf = confirm("The owner is not recorded. Add it to the database?");
-        if  (conf == true)
-            return true;
-        else
-            return False;
+        window.location.href='newperson.php'
     }
 </script>
-
 <?php
 //MySQL database information
 $servername = "127.0.0.1";
@@ -63,32 +67,48 @@ else {
 if (mysqli_num_rows($result)>0)
 {
     echo "The vehicle's licence is already occupied!";
-
     die();
 }
 
-if ($_POST['name']!="" && $_POST['licence']=="")
-{
-    echo "Owner's licence CANNOT be empty if you want to assign an owner for the vehicle!";
-    die();
-}
 
 // Insert details of new vehicle into table Vehicle.
 $sql = "SELECT * FROM Vehicle WHERE Vehicle_ID = (SELECT max(Vehicle_ID) FROM Vehicle)";
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_assoc($result);
-$newID = $row['Vehicle_ID'] + 1; //get the max ID of the Vehicles and assign a new ID for the new vehicle.
+$vehID = $row['Vehicle_ID'] + 1; //get the max ID of the Vehicles and assign a new ID for the new vehicle.
 
 $type = $_POST['make']." ".$_POST['model']; // Vehicle type contains the make and model of the vehicle.
 
 $sql = "INSERT INTO Vehicle (Vehicle_ID, Vehicle_type, Vehicle_colour, Vehicle_licence) 
-                        VALUES (".$newID.", '".$type."','".$_POST['colour']."', '".$_POST['plate']."')";
+                VALUES (".$vehID.", '".$type."','".$_POST['colour']."', '".$_POST['plate']."')";
 $result = mysqli_query($conn,$sql);
 
 
-if ($_POST['name']!="" && $_POST['licence']!="")
+if ($_POST['licence']!="")
 {
     $sql="SELECT * FROM People WHERE People_licence='".$_POST['licence']."'";
+    $result = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($result)==0)
+    {
+        echo "The owner is not recorded in the system. Press the button if you want to fill the details of the owner.";
+        echo "<br>";
+        echo "<button onclick=newperson()>Add details</button>";
+        $sql="SELECT * FROM People WHERE People_ID = (SELECT max(People_ID) FROM People)";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($result);
+        $personID = $row['People_ID'] + 1;
+        $sql = "INSERT INTO People (People_ID, People_name, People_address, People_licence)
+                    VALUES (".$personID.", '', '', '".$_POST['licence']."')";
+        $result = mysqli_query($conn,$sql);
+        $sql= "INSERT INTO Ownership (People_ID, Vehicle_ID) VALUES (".$personID.",".$vehID.")";
+        $result = mysqli_query($conn,$sql);
+    }
+    else
+    {
+        $row = mysqli_fetch_assoc($result);
+        $sql= "INSERT INTO Ownership (People_ID, Vehicle_ID) VALUES (".$row['People_ID'].",".$vehID.")";
+        $result = mysqli_query($conn,$sql);
+    }
 }
 
 $sql="SELECT * FROM Vehicle ORDER BY Vehicle_ID";
@@ -104,5 +124,6 @@ while ($row = mysqli_fetch_assoc($result))
 }
 
 ?>
+
 </body>
 </html>

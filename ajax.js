@@ -1,9 +1,9 @@
-function ChangePassword()
+function loadDoc(path)
 {
     var xmlhttp;
     if (window.XMLHttpRequest)
     {
-        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
         xmlhttp=new XMLHttpRequest();
     }
     else
@@ -15,9 +15,9 @@ function ChangePassword()
     {
         if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            document.getElementById("changePassword").innerHTML=xmlhttp.responseText;
+            document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
         }
     }
-    xmlhttp.open("GET","changepassword.php",true);
+    xmlhttp.open("POST",path,true);
     xmlhttp.send();
 }
