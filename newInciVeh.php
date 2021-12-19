@@ -5,9 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>New Vehicle</title>
+    <script src="ajax.js" type="text/javascript"></script>
 </head>
 <body>
+<button onclick=openfile('HomePage.html')>Home</button><br>
 <form method="POST">
     <h1>Information of New Vehicle</h1>
     Make: <input type="text" name="make"><br>
@@ -41,9 +43,13 @@ if ($_POST['make']!="" && $_POST['model']!="" && $_POST['colour']!="")
     $result = mysqli_query($conn,$sql);
     $sql = "UPDATE Vehicle SET Vehicle_colour = '".$_POST['colour']."' WHERE Vehicle_ID = (SELECT max(Vehicle_ID) FROM Vehicle)";
     $result = mysqli_query($conn,$sql);
+    echo "<script>alertHome()</script>";
 }
 else
+{
     echo "Please fill all the blanks!";
+    die();
+}
 ?>
 </body>
 </html>

@@ -11,9 +11,9 @@
     </select>
     <input type="submit" value="submit">
 </form>
-<?php
-echo "<script> if(confirm( '请选择跳转页面，是跳转到yes.html  否跳转到no.html？ '))  
-    location.href='test.php';else location.href='Report.php'; </script>";
-?>
+<script type="text/javascript">
+    alert("你的资料已经录入！");
+    window.location.href="HomePage.html";
+</script>
 </body>
 </html>

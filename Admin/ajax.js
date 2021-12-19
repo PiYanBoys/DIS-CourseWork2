@@ -22,6 +22,30 @@ function loadDoc(path)
     xmlhttp.send();
 }
 
+function loadDoc1(path)
+{
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            document.getElementById("myDiv1").innerHTML=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("POST",path,true);
+    xmlhttp.send();
+}
+
 function openfile(file)
 {
     window.location.href=file;
@@ -43,10 +67,4 @@ function alertChange()
 {
     alert("Password Changed!");
     window.location.href="HomePage.html";
-}
-
-function alertAdmin()
-{
-    alert("Welcome administrator!");
-    window.location.href="Admin/HomePage.html";
 }
