@@ -6,40 +6,30 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>New Vehicle</title>
-    <script src="ajax.js" type="text/javascript"></script>
+    <script src="../ajax.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <button onclick=openfile('HomePage.html')>Home</button><br>
 
-<h1>Add a New Vehicle</h1>
+
 <form method = "POST" id = "vehicle">
-    <h2>Vehicle Details</h2>
-    Licence: &nbsp;<input type="text" name="plate"><br>
-    Make: <input type="text" name="make"><br>
-    Model: <input type="text" name="model"><br>
-    Colour:  <input type="text" name="colour"><br>
-    <h2>Owner's Details</h2>
-    Licence:  <input type="text" name="licence"><br>
-    <input type="submit" value="Add">
+    <h1>Add a New Vehicle
+        <span>Please fill in all the details.</span></h1>
+    <label><span>Licence: &nbsp;</span><input type="text" name="plate"><br></label>
+    <label><span>Make: </span><input type="text" name="make"><br></label>
+    <label><span>Model: </span><input type="text" name="model"><br></label>
+    <label><span>Colour:  </span><input type="text" name="colour"><br></label>
+    <h1> </h1>
+    <h1>Owner's Details
+        <span>Fill in the licence if you want to assign the owner of the vehicle.</span></h1>
+    <label><span>Licence:  </span><input type="text" name="licence"><br></label>
+    <label><span>&nbsp;</span><input type="submit" value="Add"></label>
 </form>
 
 
 <?php
-//MySQL database information
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "test";
-
-//Open the database connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-//Check connection
-if (mysqli_connect_errno())
-{
-    echo "Failed to connect to MySQL: ".mysqli_connect_error();
-    die();
-}
+require('../connection.php');
 
 if ($_POST['plate']!="" && $_POST['make']!="" && $_POST['model']!="" && $_POST['colour']!="")
 {
@@ -47,14 +37,14 @@ if ($_POST['plate']!="" && $_POST['make']!="" && $_POST['model']!="" && $_POST['
     $result = mysqli_query($conn, $sql);
     }
 else {
-    echo "Please fill all the details of the vehicle!";
+    echo "<p>Please fill all the details of the vehicle!</p>";
     die();
 }
 
 
 if (mysqli_num_rows($result)>0)
 {
-    echo "The vehicle's licence is already occupied!";
+    echo "<p>The vehicle's licence is already occupied!</p>";
     die();
 }
 
@@ -78,9 +68,8 @@ if ($_POST['licence']!="")
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result)==0)
     {
-        echo "The owner is not recorded in the system. Press the button if you want to fill the details of the owner.";
-        echo "<br>";
-        echo "<button onclick=openfile('newperson.php')>Add details</button>";
+        echo "<script> if(confirm( 'The owner is not recorded in the system.' +
+            ' Do yuu want to fill in the details now?'))  location.href='newperson.php'; </script>";
         $sql="SELECT * FROM People WHERE People_ID = (SELECT max(People_ID) FROM People)";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);

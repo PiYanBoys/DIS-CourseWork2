@@ -1,23 +1,16 @@
 <?php
 //  to retrieve all the reports.
-//MySQL database information
-$servername = "127.0.0.1"; $username = "root"; $password = ""; $dbname = "test";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-//Check connection
-if(mysqli_connect_errno())
-{
-    echo "Failed to connect to MySQL: ".mysqli_connect_error();
-    die();}
+require('connection.php');
 
     $sql="SELECT * FROM Incident ORDER BY Incident_ID";
     $result=mysqli_query($conn,$sql);
-    echo mysqli_num_rows($result)." reports found in the system.<br>";
 
     if (mysqli_num_rows($result)>0)
     {
         echo "<table>";
-        echo "<tr><th>Incident ID</th><th>Vehicle licence</th>
-                    <th>Driver licence</th><th>Date</th><th>Report</th><th>Offence</th></tr>";
+        echo "<caption>".mysqli_num_rows($result)." reports found in the system.<br></caption>";
+        echo "<thead><th>Incident ID</th><th>Vehicle licence</th>
+                    <th>Driver licence</th><th>Date</th><th>Report</th><th>Offence</th></thead>";
         while ($row=mysqli_fetch_assoc($result))
         {
             echo "<tr>";
@@ -43,7 +36,7 @@ if(mysqli_connect_errno())
     }
     else
     {
-        echo "No report found in the system.";
+        echo "<p>No report found in the system.</p>";
     }
 
 ?>

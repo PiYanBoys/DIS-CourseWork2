@@ -7,33 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>New Vehicle</title>
     <script src="ajax.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <button onclick=openfile('HomePage.html')>Home</button><br>
+
+
 <form method="POST">
-    <h1>Information of New Vehicle</h1>
-    Make: <input type="text" name="make"><br>
-    Model: <input type="text" name="model"><br>
-    Colour:  <input type="text" name="colour"><br>
-    <input type="submit" value="Confirm">
+    <h1>Information of New Vehicle
+    <span>Please fill in all the details.</span></h1>
+    <label><span>Make: </span><input type="text" name="make"><br></label>
+    <label><span>Model: </span><input type="text" name="model"><br></label>
+    <label><span>Colour:  </span><input type="text" name="colour"><br></label>
+    <label><span>&nbsp;</span><input type="submit" value="Confirm"></label>
 </form>
 
 <?php
 
-//MySQL database information
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "test";
-
-//Open the database connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-//Check connection
-if (mysqli_connect_errno())
-{
-    echo "Failed to connect to MySQL: ".mysqli_connect_error();
-    die();
-}
+require('connection.php');
 
 
 if ($_POST['make']!="" && $_POST['model']!="" && $_POST['colour']!="")
@@ -47,7 +38,7 @@ if ($_POST['make']!="" && $_POST['model']!="" && $_POST['colour']!="")
 }
 else
 {
-    echo "Please fill all the blanks!";
+    echo "<script>alert('Please fill in all the details!')</script>";
     die();
 }
 ?>

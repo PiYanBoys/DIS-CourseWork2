@@ -7,31 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>People</title>
     <script src="ajax.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <button onclick=openfile('HomePage.html')>Home</button><br>
-    <h1>Search People</h1>
+
     <form method="POST" class="yellow">
-        License Number: &nbsp;<input type="text" name="licence"><br>
-        Name: <input type="text" name="name"><br>
-        <input type="submit" value="Search">
+        <h1>Search People</h1>
+        <label><span>License Number: &nbsp;</span><input type="text" name="licence"><br></label>
+        <label><span>Name: </span><input type="text" name="name"><br></label>
+        <label><span>&nbsp;</span><input type="submit" value="Search"></label>
     </form>
+<hr>
     <?php
-        //MySQL database information
-        $servername = "127.0.0.1";
-        $username = "root";
-        $password = "";
-        $dbname = "test";
-
-        //Open the database connection
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-        //Check connection
-        if(mysqli_connect_errno())
-        {
-            echo "Failed to connect to MySQL: ".mysqli_connect_error();
-            die();
-        }
+        require('connection.php');
 
         if ($_POST['licence']!="" or $_POST['name']!="")
         {
@@ -53,16 +42,22 @@
 
         if (mysqli_num_rows($result)>0)
         {
+            echo "<table>";
+            echo "<caption>".mysqli_num_rows($result)." results matched.<br></caption>";
+            echo "<thead><th>ID</th><th>Name</th><th>Address</th><th>Driver licence</th></thead>";
             while ($row = mysqli_fetch_assoc($result))
             {
-                echo "<li>";
-                echo $row["People_name"];
-                echo $row["People_address"];
-                echo $row["People_licence"];
-                echo "</li>";
-            }}
+                echo "<tr>";
+                echo "<td>".$row["People_ID"]."</td>";
+                echo "<td>".$row["People_name"]."</td>";
+                echo "<td>".$row["People_address"]."</td>";
+                echo "<td>".$row["People_licence"]."</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
         else
-            echo "No result matched."
+            echo "<p>No result matched.</p>"
     ?>
 </body>
 </html>

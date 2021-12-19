@@ -1,23 +1,18 @@
+<link rel="stylesheet" href="../style.css">
 <?php
 //  to retrieve all the fines.
-//MySQL database information
-$servername = "127.0.0.1"; $username = "root"; $password = ""; $dbname = "test";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-//Check connection
-if(mysqli_connect_errno())
-{
-    echo "Failed to connect to MySQL: ".mysqli_connect_error();
-    die();}
+require('../connection.php');
 
 $sql="SELECT * FROM Fines ORDER BY Fine_ID";
 $result=mysqli_query($conn,$sql);
-echo mysqli_num_rows($result)." records found in the system.<br>";
+
 
 if (mysqli_num_rows($result)>0)
 {
     echo "<table>";
-    echo "<tr><th>Fine ID</th><th>Fine Amount</th>
-                    <th>Fine Points</th><th>Incident ID</th></tr>";
+    echo "<caption>".mysqli_num_rows($result)." records found in the system.<br></caption>";
+    echo "<thead><th>Fine ID</th><th>Fine Amount</th>
+                    <th>Fine Points</th><th>Incident ID</th></thead>";
     while ($row=mysqli_fetch_assoc($result))
     {
         echo "<tr>";

@@ -6,36 +6,39 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Report</title>
-    <script src="ajax.js" type="text/javascript"></script>
+    <script src="../ajax.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<button onclick=openfile('HomePage.html')>Home</button><br>
-<h1>Edit a report</h1>
-<p>Input the ID of the incident of which the report you want to edit.</p>
-<p>Input the information you want to edit.</p>
-<p>Leave blank where you don't need to edit.</p>
+<button onclick=openfile('HomePage.html')>Home</button><br><br>
+<button onclick=openfile('Report.php') class="home">Back</button><br>
+
 <form method="POST">
-    Incident ID: &nbsp;<input type="text" name="ID"><br>
-    Driver's licence: <input type="text" name="licence"><br>
-    Vehicle's Licence: <input type="text" name="plate"><br>
-    Report: <input type="text" name="report"><br>
-    Date: <input id="date" type="date" name="date"><br>
-    Type of Offence: <select name="offence">
-        <option>Select an offence...</option>
-        <option value="1">Speeding</option>
-        <option value="2">Speeding on a motorway</option>
-        <option value="3">Seat belt offence</option>
-        <option value="4">Illegal parking</option>
-        <option value="5">Drink driving</option>
-        <option value="6">Driving without a licence</option>
-        <option value="8">Traffic light offences</option>
-        <option value="9">Cycling on pavement</option>
-        <option value="10">Failure to have control of vehicle</option>
-        <option value="11">Dangerous driving</option>
-        <option value="12">Careless driving</option>
-        <option value="13">Dangerous cycling</option>
-    </select><br>
-    <input type="submit" value="Submit">
+    <h1>Edit a report
+        <span>Input the ID of the incident of which the report you want to edit.<br>
+    Input the information you want to edit.<br>
+    Leave blank where you don't need to edit.</span></h1>
+    <label><span>Incident ID: &nbsp;</span><input type="text" name="ID"><br></label>
+    <label><span>Driver's licence: </span><input type="text" name="licence"><br></label>
+    <label><span>Vehicle's Licence: </span><input type="text" name="plate"><br></label>
+    <label><span>Report: </span><input type="text" name="report"><br></label>
+    <label><span>Date: </span><input id="date" type="date" name="date"><br></label>
+    <label><span>Type of Offence: </span><select name="offence">
+            <option>Select an offence...</option>
+            <option value="1">Speeding</option>
+            <option value="2">Speeding on a motorway</option>
+            <option value="3">Seat belt offence</option>
+            <option value="4">Illegal parking</option>
+            <option value="5">Drink driving</option>
+            <option value="6">Driving without a licence</option>
+            <option value="8">Traffic light offences</option>
+            <option value="9">Cycling on pavement</option>
+            <option value="10">Failure to have control of vehicle</option>
+            <option value="11">Dangerous driving</option>
+            <option value="12">Careless driving</option>
+            <option value="13">Dangerous cycling</option>
+        </select><br></label>
+    <label><span>&nbsp;</span><input type="submit" value="Submit"></label>
 </form>
 
 <button type="button" onclick="loadDoc('retrieveReports.php')">See All Reports</button>
@@ -43,14 +46,7 @@
 <hr>
 
 <?php
-    //MySQL database information
-    $servername = "127.0.0.1"; $username = "root"; $password = ""; $dbname = "test";
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    //Check connection
-    if(mysqli_connect_errno())
-    {
-    echo "Failed to connect to MySQL: ".mysqli_connect_error();
-    die();}
+require('../connection.php');
 
     $personNotfound = 0;
     $vehNotfound = 0;
@@ -146,7 +142,7 @@
         'Do you want to fill the details now? '))  location.href='newVeh&Per.php'; </script>";
         die();
     }
-echo "<script>alertHome()</script>"
+echo "<script>alert('Information updated!')</script>"
 
 ?>
 
