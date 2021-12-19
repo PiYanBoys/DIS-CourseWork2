@@ -21,3 +21,8 @@ function loadDoc(path)
     xmlhttp.open("POST",path,true);
     xmlhttp.send();
 }
+
+function openfile(file)
+{
+    window.location.href=file;
+}

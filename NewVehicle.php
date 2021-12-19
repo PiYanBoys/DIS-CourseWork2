@@ -14,6 +14,7 @@
             display: none;
         }
     </style>
+    <script src="ajax.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -30,12 +31,8 @@
     <input type="submit" value="Add">
 </form>
     <div id="myDiv"></div>
-<script>
-    function newperson()
-    {
-        window.location.href='newperson.php'
-    }
-</script>
+
+
 <?php
 //MySQL database information
 $servername = "127.0.0.1";
@@ -92,7 +89,7 @@ if ($_POST['licence']!="")
     {
         echo "The owner is not recorded in the system. Press the button if you want to fill the details of the owner.";
         echo "<br>";
-        echo "<button onclick=newperson()>Add details</button>";
+        echo "<button onclick=openfile('newperson.php')>Add details</button>";
         $sql="SELECT * FROM People WHERE People_ID = (SELECT max(People_ID) FROM People)";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);

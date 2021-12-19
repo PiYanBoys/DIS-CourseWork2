@@ -12,7 +12,8 @@
     <input type="submit" value="submit">
 </form>
 <?php
-echo $_POST['customers'];
+echo "<script> if(confirm( '请选择跳转页面，是跳转到yes.html  否跳转到no.html？ '))  
+    location.href='test.php';else location.href='Report.php'; </script>";
 ?>
 </body>
 </html>

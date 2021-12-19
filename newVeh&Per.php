@@ -12,6 +12,10 @@
     <h1>Information of New Person</h1>
     Name: <input type="text" name="name"><br>
     Address: <input type="text" name="address"><br>
+    <h2>Information of New Vehicle</h2>
+    Make: <input type="text" name="make"><br>
+    Model: <input type="text" name="model"><br>
+    Colour:  <input type="text" name="colour"><br>
     <input type="submit" value="Confirm">
 </form>
 <?php
@@ -31,15 +35,20 @@ if (mysqli_connect_errno())
 }
 
 
-if ($_POST['name']!="")
+if ($_POST['name']!="" && $_POST['make']!="" && $_POST['model']!="" && $_POST['colour']!="")
 {
+    $type = $_POST['make']." ".$_POST['model'];
+    $sql = "UPDATE Vehicle SET Vehicle_type = '".$type."' WHERE Vehicle_ID = (SELECT max(Vehicle_ID) FROM Vehicle)";
+    $result = mysqli_query($conn,$sql);
+    $sql = "UPDATE Vehicle SET Vehicle_colour = '".$_POST['colour']."' WHERE Vehicle_ID = (SELECT max(Vehicle_ID) FROM Vehicle)";
+    $result = mysqli_query($conn,$sql);
     $sql = "UPDATE People SET People_name = '".$_POST['name']."' WHERE People_ID = (SELECT max(People_ID) FROM People)";
     $result = mysqli_query($conn,$sql);
     $sql = "UPDATE People SET People_address = '".$_POST['address']."' WHERE People_ID = (SELECT max(People_ID) FROM People)";
     $result = mysqli_query($conn,$sql);
 }
 else
-    echo "Name cannot be empty!";
+    echo "Name, Make, Model and Colour cannot be empty!";
 ?>
 </body>
 </html>
